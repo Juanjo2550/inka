@@ -1,0 +1,34 @@
+{
+  "name": "inka-master",
+  "version": "1.0.0",
+  "description": "Inka master API",
+  "main": "index.ts",
+  "scripts": {
+    "start": "nodemon index.ts"
+  },
+  "author": "Juan Jaramillo",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.1.1",
+    "@typescript-eslint/parser": "^4.1.1",
+    "eslint": "^7.9.0",
+    "eslint-config-google": "^0.14.0",
+    "nodemon": "^2.0.4",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "@types/bcrypt": "^3.0.0",
+    "apollo-server": "^2.17.0",
+    "bcrypt": "^5.0.0",
+    "cdata-trigger": "file:../../cdata-trigger",
+    "chalk": "^4.1.0",
+    "class-validator": "^0.12.2",
+    "dotenv": "^8.2.0",
+    "graphql": "^15.3.0",
+    "reflect-metadata": "^0.1.13",
+    "sequelize": "^6.3.5",
+    "tedious": "^9.2.1",
+    "ts-node": "^9.0.0",
+    "type-graphql": "^1.0.0"
+  }
+}
