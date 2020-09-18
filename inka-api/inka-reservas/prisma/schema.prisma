@@ -1,0 +1,123 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ADMINISTRATION_USERS {
+  ADMIN_USER_ID Int     @id
+  NAME          String?
+  LASTNAME      String?
+  USERNAME      String?
+  COUNTRY       String?
+  IDENTITY_CARD String?
+  PHONE         String?
+}
+
+model HOTELS {
+  HOTEL_ID      Int     @id
+  ADMIN_USER_ID Int?
+  NAME          String?
+  COUNTRY       String?
+  ADDRESS       String?
+  RATE          Int?
+  WEB_PAGE      String?
+  PHONE         String?
+  CONTACT_EMAIL String?
+  CITY          String?
+  DESCRIPTION   String?
+}
+
+model HOTEL_ROOMS {
+  HOTEL_ROOM_ID Int      @id
+  HOTEL_ID      Int?
+  DESCRIPTION   String?
+  TYPE          String?
+  CAPACITY      Int?
+  SIMPLE_BEDS   Int?
+  DOUBLE_BEDS   Int?
+  IS_AVAILBLE   Boolean?
+  PRICE         Float?
+}
+
+model STANDARD_USERS {
+  STD_USER_ID Int     @id
+  NAME        String?
+  LASTNAME    String?
+  USERNAME    String?
+  COUNTRY     String?
+}
+
+model administration_users {
+  admin_user_id Int      @id
+  name          String?
+  lastname      String?
+  username      String?
+  country       String?
+  identity_card String
+  phone         String?
+  hotels        hotels[]
+}
+
+model hotel_rooms {
+  hotel_room_id Int             @id
+  hotel_id      Int
+  description   String?
+  type          String?
+  capacity      Int?
+  simple_beds   Int?
+  double_beds   Int?
+  is_availble   Boolean?
+  price         Float?
+  hotels        hotels          @relation(fields: [hotel_id], references: [hotel_id])
+  rooms_booking rooms_booking[]
+
+  @@index([hotel_id], name: "hotel_hotel_room_fk")
+}
+
+model hotels {
+  hotel_id             Int                  @id
+  admin_user_id        Int
+  name                 String?
+  country              String?
+  address              String?
+  rate                 Int?
+  web_page             String?
+  phone                String?
+  contact_email        String?
+  city                 String?
+  description          String?
+  administration_users administration_users @relation(fields: [admin_user_id], references: [admin_user_id])
+  hotel_rooms          hotel_rooms[]
+
+  @@index([admin_user_id], name: "admin_user_hotel_fk")
+}
+
+model rooms_booking {
+  room_booking_id Int            @id
+  hotel_room_id   Int
+  std_user_id     Int
+  total_price     Float?
+  paid_state      Boolean?
+  creation_date   DateTime?
+  expiration_date DateTime?
+  arrive_date     DateTime?
+  out_date        DateTime?
+  hotel_rooms     hotel_rooms    @relation(fields: [hotel_room_id], references: [hotel_room_id])
+  standard_users  standard_users @relation(fields: [std_user_id], references: [std_user_id])
+
+  @@index([hotel_room_id], name: "hotel_room_room_booking_fk")
+  @@index([std_user_id], name: "standard_users_rooms_booking_fk")
+}
+
+model standard_users {
+  std_user_id   Int             @id
+  name          String?
+  lastname      String?
+  username      String?
+  country       String?
+  rooms_booking rooms_booking[]
+}

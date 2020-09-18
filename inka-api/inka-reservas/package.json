@@ -4,8 +4,28 @@
   "description": "Inka reservas api",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon index.ts"
   },
   "author": "Juan Jaramillo",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "@prisma/cli": "^2.7.0",
+    "@types/node": "^14.10.2",
+    "@typescript-eslint/eslint-plugin": "^4.1.1",
+    "@typescript-eslint/parser": "^4.1.1",
+    "eslint": "^7.9.0",
+    "nodemon": "^2.0.4",
+    "ts-node": "^9.0.0",
+    "typescript": "^4.0.2"
+  },
+  "dependencies": {
+    "@prisma/client": "^2.7.1",
+    "apollo-server": "^2.17.0",
+    "cdata-trigger": "file:../../cdata-trigger",
+    "class-validator": "^0.12.2",
+    "dotenv": "^8.2.0",
+    "graphql": "^15.3.0",
+    "reflect-metadata": "^0.1.13",
+    "type-graphql": "^1.0.0"
+  }
 }
