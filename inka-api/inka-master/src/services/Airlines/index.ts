@@ -47,7 +47,7 @@ export class AirlinesResolver {
   ): Promise<Airlines> {
     const db = await getDatabaseInstance();
     const newAirline = await db.Airlines.create({
-      AIRLINE_ID: await db.Airlines.count() + 1,
+      AIRLINE_ID: Number(await db.Airlines.max("AIRLINE_ID")) + 1,
       ADMIN_USER_ID: adminUserId,
       NAME: name,
       COUNTRY: country,

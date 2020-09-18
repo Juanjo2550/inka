@@ -59,7 +59,7 @@ export class AdministrationUserResolver {
   ): Promise<boolean> {
     const db = await getDatabaseInstance();
     const newUser = await db.AdministrationUser._createOne(
-      await db.AdministrationUser.count() + 1,
+      Number(await db.AdministrationUser.max("ADMIN_USER_ID")) + 1,
       name,
       lastname,
       username,

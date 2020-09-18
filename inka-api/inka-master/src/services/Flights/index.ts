@@ -55,7 +55,7 @@ export class FlightsResolver {
   ): Promise<Flights> {
     const db = await getDatabaseInstance();
     const newFlight = await db.Flights.create({
-      FLIGHT_ID: await db.Flights.count() + 1,
+      FLIGHT_ID: Number(await db.Flights.max("FLIGHT_ID")) + 1,
       AIRLINE_ID: airlineId,
       PLANE_ID: planeId,
       ORIGIN: origin,

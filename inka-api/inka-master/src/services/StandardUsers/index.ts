@@ -42,7 +42,7 @@ export class StandardUsersResolver {
   ): Promise<boolean> {
     const db = await getDatabaseInstance();
     const newUser = await db.StandardUser._createOne(
-      await db.StandardUser.count() + 1,
+      Number(await db.StandardUser.max("STD_USER_ID")) + 1,
       name,
       username,
       lastname,

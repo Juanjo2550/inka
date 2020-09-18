@@ -59,7 +59,7 @@ export class HotelsResolver {
   ): Promise<Hotels> {
     const db = await getDatabaseInstance();
     const newUser = await db.Hotel.create({
-      HOTEL_ID: await db.Hotel.count() + 1,
+      HOTEL_ID: Number(await db.Hotel.max("HOTEL_ID")) + 1,
       ADMIN_USER_ID: adminUserId,
       NAME: name,
       COUNTRY: country,

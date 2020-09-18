@@ -47,7 +47,7 @@ export class HotelRoomsResolver {
   ): Promise<HotelRooms> {
     const db = await getDatabaseInstance();
     const newHotelRoom = await db.HotelRooms.create({
-      HOTEL_ROOM_ID: await db.HotelRooms.count() + 1,
+      HOTEL_ROOM_ID: Number(await db.HotelRooms.max("HOTEL_ROOM_ID")) + 1,
       HOTEL_ID: hotelId,
       DESCRIPTION: description,
       TYPE: type,

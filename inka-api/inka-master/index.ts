@@ -9,12 +9,11 @@ const main = async () => {
       schema: await getSchema(),
     });
 
-    const { url } = await server.listen();
-    console.log(`${chalk.bgGreen('[API]')} 🚀  Server ready at ${url}`);
+    const { url } = await server.listen({ port: 4001 });
+    console.log(`${chalk.bgGreen('[API-MASTER]')} 🚀  Server ready at ${url}`);
   } catch (e) {
-    console.log(`${chalk.bgRed('[API]')} ${e}`);
+    console.log(`${chalk.bgRed('[API-MASTER]')} ${e}`);
   }
-
 };
 
 main();

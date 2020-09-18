@@ -23,7 +23,7 @@ export class PlaneResolver {
   ): Promise<Planes> {
     const db = await getDatabaseInstance();
     const newPlane = await db.Planes.create({
-      PLANE_ID: await db.Planes.count() + 1,
+      PLANE_ID: Number(await db.Planes.max("PLANE_ID")) + 1,
       TYPE: type,
       CAPACITY: capacity
     });
