@@ -1,0 +1,144 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ADMINISTRATION_USERS {
+  ADMIN_USER_ID Int     @id
+  NAME          String?
+  LASTNAME      String?
+  USERNAME      String?
+  COUNTRY       String?
+  IDENTITY_CARD String?
+  PHONE         String?
+}
+
+model AIRLINES {
+  AIRLINE_ID    Int     @id
+  ADMIN_USER_ID Int?
+  NAME          String?
+  COUNTRY       String?
+  DESCRIPTION   String?
+  WEB_PAGE      String?
+  PHONE         String?
+  CONTACT_EMAIL String?
+}
+
+model FLIGHTS {
+  FLIGHT_ID               Int       @id
+  AIRLINE_ID              Int?
+  PLANE_ID                Int?
+  ORIGIN                  String?
+  DESTINATION             String?
+  ARRIVE_DATE             DateTime?
+  OUT_DATE                DateTime?
+  AVAILABLE_              Int?
+  AVAILBLE_BUSINESS_SEATS Int?
+  PRICE                   Float?
+}
+
+model PLANES {
+  PLANE_ID Int     @id
+  TYPE     String?
+  CAPACITY Int?
+}
+
+model STANDARD_USERS {
+  STD_USER_ID Int     @id
+  NAME        String?
+  LASTNAME    String?
+  USERNAME    String?
+  COUNTRY     String?
+}
+
+model administration_users {
+  admin_user_id Int        @id
+  name          String?
+  lastname      String?
+  username      String?
+  country       String?
+  identity_card String
+  phone         String?
+  airlines      airlines[]
+}
+
+model airlines {
+  airline_id           Int                  @id
+  admin_user_id        Int
+  name                 String?
+  country              String?
+  description          String?
+  web_page             String?
+  phone                String?
+  contact_email        String?
+  administration_users administration_users @relation(fields: [admin_user_id], references: [admin_user_id])
+  flights              flights[]
+
+  @@index([admin_user_id], name: "admin_user_airline_fk")
+}
+
+model flights {
+  flight_id               Int       @id
+  airline_id              Int
+  plane_id                Int
+  origin                  String?
+  destination             String?
+  arrive_date             DateTime?
+  out_date                DateTime?
+  available_              Int?
+  availble_business_seats Int?
+  price                   Float?
+  airlines                airlines  @relation(fields: [airline_id], references: [airline_id])
+  planes                  planes    @relation(fields: [plane_id], references: [plane_id])
+  tickets                 tickets[]
+
+  @@index([airline_id], name: "airline_flight_fk")
+  @@index([plane_id], name: "plane_flight_fk")
+}
+
+model flights_booking {
+  flg_booking_id  Int            @id
+  std_user_id     Int
+  total_price     Float?
+  paid_state      Boolean?
+  creation_date   DateTime?
+  expiration_date DateTime?
+  standard_users  standard_users @relation(fields: [std_user_id], references: [std_user_id])
+  tickets         tickets[]
+
+  @@index([std_user_id], name: "standard_user_fligth_booking_fk")
+}
+
+model planes {
+  plane_id Int       @id
+  type     String?
+  capacity Int?
+  flights  flights[]
+}
+
+model standard_users {
+  std_user_id     Int               @id
+  name            String?
+  lastname        String?
+  username        String?
+  country         String?
+  flights_booking flights_booking[]
+}
+
+model tickets {
+  ticket_id       Int             @id
+  flg_booking_id  Int
+  flight_id       Int
+  idividual_price Float?
+  seat            String?
+  type            String?
+  flights_booking flights_booking @relation(fields: [flg_booking_id], references: [flg_booking_id])
+  flights         flights         @relation(fields: [flight_id], references: [flight_id])
+
+  @@index([flg_booking_id], name: "flight_booking_ticket_fk")
+  @@index([flight_id], name: "flight_ticket_fk")
+}
